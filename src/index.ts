@@ -26,7 +26,6 @@ import {
 	FN_INSTALLER_JAR
 } from "./constants";
 import { MCVersion, ReleaseType } from "./types";
-import ModModel from "./models/ModModel";
 
 const ARGS = minimist(process.argv);
 
@@ -36,12 +35,6 @@ const TEMPLATES: Choice[] = [
 	choiceFromValue("vanilla"),
 	choiceFromValue("fabric")
 ];
-
-const MODS: Choice[] = [
-	choiceFromValue("lithium"),
-	choiceFromValue("phosphor"),
-	choiceFromValue("hydrogen"),
-]
 
 class MyError extends Error {
 	constructor(message: string) {
@@ -85,12 +78,6 @@ async function main() {
 			name: "template",
 			message: "Select a mod loader",
 			choices: TEMPLATES
-		},
-		{
-			type: (prev: string) => prev == "fabric" ? "multiselect" : null,
-			name: "mods",
-			message: "Choose optimization mods",
-			choices: MODS
 		},
 		{
 			type: "confirm",
@@ -197,16 +184,6 @@ async function installFabric(versionId: string, path_: string) {
 
 	GraphicsModel.printmv(kleur.green(CHECK), 0);
 	GraphicsModel.newline();
-}
-
-// process.on("exit", () => GraphicsModel.setCursor(true));
-
-
-async function main2() {
-	let x = await ModModel.latest("sodium", "1.18");
-	console.log(x);
-	
-
 }
 
 main()
