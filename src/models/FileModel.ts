@@ -42,12 +42,15 @@ class FileModel {
 
     });
   }
-  
+
   /**
-   * Writes some string content to a file
+   * Promise-based alternative to {@link fs.writeFile }
    * 
-   * @param file The path to the file
-   * @param content The contents to write
+   * @param path
+   * A path to a file. If a URL is provided, it must use the
+   * file: protocol. If a file descriptor is provided, the
+   * underlying file will not be closed automatically.
+   * @param data The data to write. If something other than a Buffer or Uint8Array is provided, the value is coerced to a string.
    */
   async writeFile(file: string, content: string): Promise<void> {
     return new Promise((resolve, reject) => {

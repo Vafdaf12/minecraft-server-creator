@@ -13,7 +13,10 @@ class NetworkModel {
   }
 
   /**
-   * @param url The url to get
+   * An async equivalent of {@link https.get} that does not require
+   * any callbacks for errors and resolving
+   * 
+   * @param url The URL to get
    * @returns The response object from the url
    */
   async get(url: string): Promise<IncomingMessage> {
