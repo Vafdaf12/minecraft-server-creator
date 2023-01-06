@@ -8,9 +8,11 @@ import NetworkModel from "./NetworkModel";
 class FileModel {
 
   /**
-   * Downloads a file to the given file
+   * Writes the response from a URL to a file
+   * at the given path
    * 
    * @param url URL to download from
+   * 
    * @param file Path to the downloaded file
    * @param onProgress A progress callback
    */
@@ -46,10 +48,9 @@ class FileModel {
   /**
    * Promise-based alternative to {@link fs.writeFile }
    * 
-   * @param path
-   * A path to a file. If a URL is provided, it must use the
-   * file: protocol. If a file descriptor is provided, the
-   * underlying file will not be closed automatically.
+   * @param path A path to a file. If a URL is provided, it must use the
+   * file: protocol. If a file descriptor is provided, the underlying
+   * file will not be closed automatically.
    * @param data The data to write. If something other than a Buffer or Uint8Array is provided, the value is coerced to a string.
    */
   async writeFile(file: string, content: string): Promise<void> {
@@ -67,22 +68,15 @@ class FileModel {
    * @param path_ The path to create
    * @returns true if any directories were created, false otherwise
    */
-  async createDirectory(path_: string): Promise<boolean> {
+  async mkdirRecursive(path_: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (fs.existsSync(path_)) {
         resolve(false);
         return;
       }
 
-      fs.mkdir(path_, { recursive: true }, err => {
-        if (err) {
-          reject(err.message);
-          return;
-        }
-
-        resolve(true);
-      });
-    });
+      fs.mkdir(path_, { recursive: true }, err => err ? reject(err.message) : resolve(true));
+    })
   }
 }
 
