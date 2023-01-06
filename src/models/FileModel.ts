@@ -49,12 +49,9 @@ class FileModel {
    * file will not be closed automatically.
    * @param data The data to write. If something other than a Buffer or Uint8Array is provided, the value is coerced to a string.
    */
-  async writeFile(file: string, content: string): Promise<void> {
+  async writeFile(file: fs.PathOrFileDescriptor, data: string | NodeJS.ArrayBufferView): Promise<void> {
     return new Promise((resolve, reject) => {
-      fs.writeFile(file, content, err => {
-        if (err) reject(err.message);
-        else resolve();
-      });
+      fs.writeFile(file, data, err => err ? reject(err.message) : resolve());
     });
   }
 
