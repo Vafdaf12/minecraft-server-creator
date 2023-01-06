@@ -1,11 +1,10 @@
 import fs from "fs";
-import path from "path";
 
 import { ProgressCallback } from "../types";
 
 import NetworkModel from "./NetworkModel";
 
-class FileModel {
+class FileSystem {
 
   /**
    * Writes the response from a URL to a file
@@ -73,4 +72,4 @@ class FileModel {
   }
 }
 
-export default new FileModel();
+export default new FileSystem();

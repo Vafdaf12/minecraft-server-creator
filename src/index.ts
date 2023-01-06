@@ -13,7 +13,7 @@ import minimist from "minimist";
 // Custom Modules
 import VersionModel from "./models/VersionModel";
 import JavaModel from "./models/JavaModel";
-import FileModel from "./models/FileModel";
+import FileSystem from "./models/FileSystem";
 import GraphicsModel from "./models/GraphicsModel";
 
 import { Spinner } from "./spinner";
@@ -138,7 +138,7 @@ async function downloadFile(url: string, message: string, path_: string) {
 	SPINNER.start(0);
 	GraphicsModel.printmv(message, 2);
 
-	await FileModel.downloadFile(url, path_, (current, total) => {
+	await FileSystem.downloadFile(url, path_, (current, total) => {
 		const percentage = Math.round((current / total) * 1000) / 10;
 		GraphicsModel.printmv(`${message} ${percentage}%  `, 2);
 	});
@@ -167,7 +167,7 @@ async function installFabric(versionId: string, path_: string) {
 	GraphicsModel.printmv("Installing Fabric loader...", 2);
 
 	SPINNER.start(0);
-	await FileModel.downloadFile(URL_FABRIC_INSTALLER, FN_INSTALLER_JAR);
+	await FileSystem.downloadFile(URL_FABRIC_INSTALLER, FN_INSTALLER_JAR);
 
 	await execFile("java", [
 		"-jar",
