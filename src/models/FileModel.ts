@@ -22,10 +22,6 @@ class FileModel {
     onProgress?: ProgressCallback
   ): Promise<void> {
     return new Promise(async (resolve, reject) => {
-      const dir = path.dirname(file);
-
-      await this.createDirectory(dir);
-
       const res = await NetworkModel.get(url);
 
       const stream = fs.createWriteStream(file);
